@@ -1,0 +1,54 @@
+$base: '.pt-input';
+#{$base} {
+  position: relative;
+
+  &__input {
+    padding: 10px 16px;
+    width: 100%;
+    height: 40px;
+    color: rgb(8, 14, 20);
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.8px;
+    border-radius: 8px;
+    border: 1px solid rgb(93, 104, 119);
+    background-color: #fff;
+    transition: box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  }
+
+  &__placeholder {
+    transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+    pointer-events: none;
+    transform-origin: left center;
+    position: absolute;
+    left: 16px;
+    top: 11px;
+    color: rgb(8, 14, 20);
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.8px;
+    height: 18px;
+    line-height: 18px;
+    transform: translateY(0) scale(1);
+    background-color: #fff;
+  }
+
+  &--focus, &--has-value {
+    #{$base}__placeholder {
+      transform: translateY(-22px) scale(0.73);
+      box-shadow: 0 0 0 4px #fff;
+    }
+  }
+
+  &--focus, &:focus {
+    #{$base}__input {
+      outline: 0;
+      box-shadow: 0 0 2px 0 #3357ff;
+      border-color: #3357ff;
+    }
+
+    #{$base}__placeholder {
+      color: #3357ff;
+    }
+  }
+}

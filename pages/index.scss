@@ -1,0 +1,29 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.pt-main {
+  width: 100vw;
+  height: 100vh;
+  background-color: #EEEFF2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__content {
+    width: 800px;
+    height: 480px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 0 30px 10px rgba(0, 0, 0, 0.05)
+  }
+}

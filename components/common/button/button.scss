@@ -1,0 +1,32 @@
+.pt-button {
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+
+  color: #fff;
+  height: 40px;
+  border-radius: 20px;
+  background-color: #00ACFF;
+
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 1.3px;
+  text-align: center;
+
+  padding-left: 40px;
+  padding-right: 40px;
+
+  outline: none;
+  box-shadow: none;
+  border: none;
+
+  &:hover {
+    background-color: darken(#00ACFF, 20%);
+  }
+
+  &:focus {
+    background-color: darken(#00ACFF, 20%);
+    outline: none;
+  }
+}

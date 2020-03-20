@@ -1,0 +1,70 @@
+$base: '.pt-checkbox';
+#{$base} {
+  position: relative;
+
+  &__placeholder {
+    color: #000;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: all 0.5s ease;
+    &.checked {
+      color: #00ACFF;
+    }
+  }
+
+  &__input {
+    position: absolute;
+    opacity: 0;
+    height: 15px;
+    width: 15px;
+    margin: 0;
+    z-index: 9;
+    cursor: pointer;
+    transition: all 0.5s ease;
+
+    & + label {
+      position: relative;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    & + label:before {
+      content: '';
+      margin-right: 10px;
+      display: inline-block;
+      vertical-align: text-top;
+      height: 15px;
+      width: 15px;
+      border: 2px solid #000000;
+      border-radius: 1px;
+    }
+
+    &:hover + label:before {
+      border: 2px solid #000000;
+    }
+
+    &:checked + label:before {
+      border: 2px solid #00ACFF;
+
+    }
+
+    &:checked + label:after {
+      content: '';
+      position: absolute;
+      left: 4px;
+      top: 9px;
+      background: white;
+      width: 2px;
+      height: 2px;
+      box-shadow:
+              2px 0 0 #00ACFF,
+              4px 0 0 #00ACFF,
+              4px -2px 0 #00ACFF,
+              4px -4px 0 #00ACFF,
+              4px -6px 0 #00ACFF,
+              4px -8px 0 #00ACFF;
+      transform: rotate(45deg);
+    }
+  }
+
+}
