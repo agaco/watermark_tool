@@ -9,7 +9,7 @@ const Button = (props) => (
 );
 
 Button.propTypes = {
-  props: PropTypes.any.isRequired,
+  props: PropTypes.any,
 };
 
 export default Button;
