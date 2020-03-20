@@ -7,6 +7,7 @@
   },
   "license": "MIT",
   "scripts": {
+    "lint": "eslint",
     "dev": "next",
     "build": "next build",
     "start": "next start"
@@ -18,5 +19,10 @@
     "node-sass": "^4.13.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-react": "^7.19.0"
   }
 }
