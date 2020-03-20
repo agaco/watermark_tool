@@ -30,11 +30,6 @@ $base: '.pt-editor';
     #{$base}__canvas {
       height: 100%;
       width: 100%;
-
-      &--watermark {
-        border: 1px solid red;
-        filter: blur(20);
-      }
     }
     #{$base}__buttons {
       border-top: 2px solid #D4D4D4;
