@@ -86,6 +86,7 @@ const Editor = () => {
 
     if (value === '') {
       setNewData([]);
+      toggleChecked(false);
     }
   }, [value]);
 
