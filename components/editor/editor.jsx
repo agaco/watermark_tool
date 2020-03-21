@@ -77,7 +77,6 @@ const Editor = () => {
 
 
   useEffect(() => {
-
     state.images.length > 0 && dispatch({type: 'SET_LOADING_ACTION'});
 
     if (value !== '') {
@@ -113,9 +112,7 @@ const Editor = () => {
       {state.isLoading && <Loader/>}
       <div className={`pt-editor__search-results ${isHidden}`} >
         {state.images.map((item, index) => {
-
           if (!item.placeholder) {
-
             return (
               <SearchItem key={index}
                 isSelected={state.singleImage.title === item.title}
