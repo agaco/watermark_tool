@@ -144,7 +144,6 @@ const Editor = () => {
             onChange={() => toggleChecked(!isChecked)}
           />
         </span>
-        <p> { value }</p>
         <Button onClick={onDownload}>DOWNLOAD</Button>
       </div>
     </div>
