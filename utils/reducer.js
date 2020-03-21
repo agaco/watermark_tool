@@ -2,20 +2,20 @@ export const imagesReducer = (state, action) => {
   switch (action.type) {
     case 'SET_LOADING_ACTION':
       return {
-        ...state,
+        // ...state,
         isLoading: true,
         images: [],
       };
     case 'SET_SEARCH_ACTION':
       return {
-        ...state,
+        // ...state,
         images: action.payload,
         singleImage: {},
         isLoading: false,
       };
     case 'SET_EDIT_ITEM_ACTION':
       return {
-        ...state,
+        // ...state,
         singleImage: action.payload,
       };
   }

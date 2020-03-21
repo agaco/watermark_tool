@@ -9,10 +9,40 @@ import {imagesReducer} from '../../utils/reducer';
 
 const Editor = () => {
   const [value, setValue] = useState('');
+  const [loadedData, setLoadedData] = useState([]);
   const canvasRef = useRef(null);
   const initialState = {images: [], singleImage: {}, isLoading: false};
   const [state, dispatch] = useReducer(imagesReducer, initialState);
   const [isChecked, toggleChecked] = useState(false);
+
+  const setNewData = (val) => {
+    dispatch({
+      type: 'SET_SEARCH_ACTION',
+      payload: val,
+    });
+  };
+  const callForNewData = async () => {
+    const response = await fetch(`/api/search?query=${value}`);
+    if (response.status == 200) {
+      const parsedRes = await response.json();
+      const data = await Promise.all(parsedRes.images.map(async (item) => {
+        const img = await new Image();
+        await (img.src = item.url);
+        await (item.placeholder = true);
+
+        await (img.onload = () => {
+          setTimeout(() => {
+            (item.size = `${img.height} x ${img.width}`);
+            delete item.placeholder;
+            setLoadedData([...loadedData, item]);
+            Promise.resolve();
+          }, 600);
+        });
+        return item;
+      }));
+      await setNewData(data);
+    }
+  };
 
   useEffect(() => {
     const parentWidth = canvasRef.current.parentNode.offsetWidth;
@@ -28,7 +58,7 @@ const Editor = () => {
     const image = new Image();
     const logo = new Image();
     logo.src = '/logo.svg';
-    if (Object.keys(singleImage).length > 0) {
+    if (singleImage && Object.keys(singleImage).length > 0) {
       image.src = singleImage.url;
       image.onload = () => {
         const ratio = canvasRef.current.height / image.height;
@@ -40,41 +70,23 @@ const Editor = () => {
         isChecked && context.drawImage(logo, logoPositionX, logoPositionY);
       };
     }
-    if (Object.keys(singleImage).length === 0) {
+    if (singleImage && Object.keys(singleImage).length === 0) {
       context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
     }
   }, [state.singleImage, isChecked]);
 
 
   useEffect(() => {
+
     state.images.length > 0 && dispatch({type: 'SET_LOADING_ACTION'});
 
-    if (value !== '' ) {
+    if (value !== '') {
       dispatch({type: 'SET_LOADING_ACTION'});
-
-      fetch(`/api/search?query=${value}`)
-        .then((res) => res.status === 200 && res.json())
-        .then((data) => {
-          return data.images.length > 0 && data.images.map((item) => {
-            const img = new Image();
-            img.src = item.url;
-            item.size = `${img.height} x ${img.width}`;
-            return item;
-          });
-        })
-        .then((images) => {
-          dispatch({
-            type: 'SET_SEARCH_ACTION',
-            payload: images,
-          });
-        });
+      callForNewData();
     }
 
-    if (value === '' && state.images.length > 0) {
-      dispatch({
-        type: 'SET_SEARCH_ACTION',
-        payload: [],
-      });
+    if (value === '') {
+      setNewData([]);
     }
   }, [value]);
 
@@ -94,18 +106,26 @@ const Editor = () => {
   };
 
   const isHidden = state.images.length === 0 ? 'hidden' : '';
+
   return (<div className='pt-editor'>
     <div className='pt-editor__search'>
       <Input value={value} onChange={setValue} placeholder='Search'/>
       {state.isLoading && <Loader/>}
       <div className={`pt-editor__search-results ${isHidden}`} >
-        {state.images.length > 0 && state.images.map((item, index) => {
-          return (
-            <SearchItem key={index}
-              isSelected={state.singleImage.title === item.title}
-              onClick={() => onItemSelect(item)}
-              {...item} />
-          );
+        {state.images.map((item, index) => {
+
+          if (!item.placeholder) {
+
+            return (
+              <SearchItem key={index}
+                isSelected={state.singleImage.title === item.title}
+                onClick={() => onItemSelect(item)}
+                {...item} />
+            );
+          }
+          if (item.placeholder) {
+            return <img key={index} src='./placeholder.svg' alt='placeholder'/>;
+          }
         })}
       </div>
     </div>
@@ -124,6 +144,7 @@ const Editor = () => {
             onChange={() => toggleChecked(!isChecked)}
           />
         </span>
+        <p> { value }</p>
         <Button onClick={onDownload}>DOWNLOAD</Button>
       </div>
     </div>
